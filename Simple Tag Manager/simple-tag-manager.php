@@ -1,6 +1,4 @@
 <?php
-defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
-include( plugin_dir_path( __FILE__ ) . '/settings.php');
 /**
 * Plugin Name: Simple Tag Manager
 * Plugin URI: https://dansedmak.com/simple-tag-manager/
@@ -11,49 +9,58 @@ include( plugin_dir_path( __FILE__ ) . '/settings.php');
 * License: MIT
 */
 
+defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
+include( plugin_dir_path( __FILE__ ) . '/settings.php');
+
 // Create the option page
-function add_option_page()
+function ecpt_stm_45t5dsfzxv22_zdx_35_option_page()
 {
-    add_options_page('Simple Tag Manager', 'Simple Tag Manager', 'administrator', 'simple-tag-manager', 'stm_page');
+    add_options_page('Simple Tag Manager', 'Simple Tag Manager', 'administrator', 'simple-tag-manager', 'ecpt_stm_45t5dsfzxv22_zdx_35_page');
 }
 
-add_action('admin_menu', 'add_option_page');
-register_activation_hook( __FILE__, 'stm_activate' );
-register_deactivation_hook( __FILE__, 'stm_deactivate' );
-if(get_option('stm_option_1') == "on"){ add_action('wp_head','hook_head'); add_action('wp_footer','hook_body'); }
+add_action('admin_menu', 'ecpt_stm_45t5dsfzxv22_zdx_35_option_page');
+register_activation_hook( __FILE__, 'ecpt_stm_45t5dsfzxv22_zdx_35_activate' );
+register_deactivation_hook( __FILE__, 'ecpt_stm_45t5dsfzxv22_zdx_35_deactivate' );
+if(get_option('ecpt_stm_45t5dsfzxv22_zdx_35_stm_option_1') == "on"){ add_action('wp_head','ecpt_stm_45t5dsfzxv22_zdx_35_hook_head'); add_action('wp_footer','ecpt_stm_45t5dsfzxv22_zdx_35_hook_body'); }
 
 // Activate the plugin
-function stm_activate(){
-add_option( 'stm_option_1', 'off', '', 'yes' );
-add_option( 'stm_option_2', '', '', 'yes' );
-add_option( 'stm_option_3', '', '', 'yes' );
+function ecpt_stm_45t5dsfzxv22_zdx_35_activate(){
+	add_option( 'ecpt_stm_45t5dsfzxv22_zdx_35_stm_option_1', 'off', '', 'yes' );
+	add_option( 'ecpt_stm_45t5dsfzxv22_zdx_35_stm_option_2', '', '', 'yes' );
+	add_option( 'ecpt_stm_45t5dsfzxv22_zdx_35_stm_option_3', '', '', 'yes' );
 }
 
 // Deactivate the plugin
-function stm_deactivate(){
-delete_option( 'stm_option_1');
-delete_option( 'stm_option_2');
-delete_option( 'stm_option_3');
+function ecpt_stm_45t5dsfzxv22_zdx_35_deactivate(){
+	delete_option( 'ecpt_stm_45t5dsfzxv22_zdx_35_stm_option_1');
+	delete_option( 'ecpt_stm_45t5dsfzxv22_zdx_35_stm_option_2');
+	delete_option( 'ecpt_stm_45t5dsfzxv22_zdx_35_stm_option_3');
 }
 
 // Add the Tag Manager's script in the head
-function hook_head() {
-	echo get_option('stm_option_2');
+function ecpt_stm_45t5dsfzxv22_zdx_35_hook_head() {
+	echo get_option('stm_45t5dsfzxv22_zdx_35_stm_option_2');
 }
 
-// Add the Tag Managerìs script in the body
-function hook_body() {
-  echo get_option('stm_option_3');
+// Add the Tag Manager's script in the body
+function ecpt_stm_45t5dsfzxv22_zdx_35_hook_body() {
+	echo get_option('ecpt_stm_45t5dsfzxv22_zdx_35_stm_option_3');
 }
 
 // Update the options
-function stm_update($x, $y){
-  update_option( "stm_option_$x", $y, 'yes' );
+function ecpt_stm_45t5dsfzxv22_zdx_35_stm_update($x, $y){
+	$x = sanitize_text_field($x);
+	$y = sanitize_text_field($y);
+	update_option( "ecpt_stm_45t5dsfzxv22_zdx_35_stm_option_$x", $y, 'yes' );
 }
 
-if(isset($_POST['stmx'])){
-  stm_update("1", $_POST['opt1']);
-  stm_update("2", $_POST['opt2']);
-  stm_update("3", $_POST['opt3']);
+// When the form is submitted ...
+if(isset($_POST['stmx']) && $ecpt_stm_45t5dsfzxv22_zdx_35_is_admin == true){
+	$opt1 = sanitize_text_field($_POST['opt1']);
+	$opt2 = sanitize_text_field($_POST['opt2']);
+	$opt3 = sanitize_text_field($_POST['opt3']);
+	ecpt_stm_45t5dsfzxv22_zdx_35_stm_update("1", $opt1);
+	ecpt_stm_45t5dsfzxv22_zdx_35_stm_update("2", $opt2);
+	ecpt_stm_45t5dsfzxv22_zdx_35_stm_update("3", $opt3);
 }
 ?>
