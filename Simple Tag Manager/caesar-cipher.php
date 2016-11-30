@@ -1,4 +1,8 @@
 <?php
+/* 
+	Taken from https://github.com/kkiernan/caesar-cipher-php
+	Developed by Kelly Kiernan
+*/
 
 namespace KKiernan;
 
