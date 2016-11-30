@@ -39,7 +39,7 @@ function ecpt_stm_45t5dsfzxv22_zdx_35_deactivate(){
 
 // Add the Tag Manager's script in the head
 function ecpt_stm_45t5dsfzxv22_zdx_35_hook_head() {
-	echo get_option('stm_45t5dsfzxv22_zdx_35_stm_option_2');
+	echo get_option('ecpt_stm_45t5dsfzxv22_zdx_35_stm_option_2');
 }
 
 // Add the Tag Manager's script in the body
@@ -49,18 +49,15 @@ function ecpt_stm_45t5dsfzxv22_zdx_35_hook_body() {
 
 // Update the options
 function ecpt_stm_45t5dsfzxv22_zdx_35_stm_update($x, $y){
-	$x = sanitize_text_field($x);
-	$y = sanitize_text_field($y);
+	if(is_admin()){
 	update_option( "ecpt_stm_45t5dsfzxv22_zdx_35_stm_option_$x", $y, 'yes' );
+	}
 }
 
 // When the form is submitted ...
-if(isset($_POST['stmx']) && $ecpt_stm_45t5dsfzxv22_zdx_35_is_admin == true){
-	$opt1 = sanitize_text_field($_POST['opt1']);
-	$opt2 = sanitize_text_field($_POST['opt2']);
-	$opt3 = sanitize_text_field($_POST['opt3']);
-	ecpt_stm_45t5dsfzxv22_zdx_35_stm_update("1", $opt1);
-	ecpt_stm_45t5dsfzxv22_zdx_35_stm_update("2", $opt2);
-	ecpt_stm_45t5dsfzxv22_zdx_35_stm_update("3", $opt3);
+if(isset($_POST['stmx'])){
+	ecpt_stm_45t5dsfzxv22_zdx_35_stm_update("1", $_POST['opt1']);
+	ecpt_stm_45t5dsfzxv22_zdx_35_stm_update("2", $_POST['opt2']);
+	ecpt_stm_45t5dsfzxv22_zdx_35_stm_update("3", $_POST['opt3']);
 }
 ?>
