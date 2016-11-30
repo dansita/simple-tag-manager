@@ -11,6 +11,7 @@
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 include( plugin_dir_path( __FILE__ ) . '/settings.php');
+include( plugin_dir_path( __FILE__ ) . '/caesar-cipher.php');
 
 // Create the option page
 function ecpt_stm_45t5dsfzxv22_zdx_35_option_page()
@@ -21,13 +22,13 @@ function ecpt_stm_45t5dsfzxv22_zdx_35_option_page()
 add_action('admin_menu', 'ecpt_stm_45t5dsfzxv22_zdx_35_option_page');
 register_activation_hook( __FILE__, 'ecpt_stm_45t5dsfzxv22_zdx_35_activate' );
 register_deactivation_hook( __FILE__, 'ecpt_stm_45t5dsfzxv22_zdx_35_deactivate' );
-if(get_option('ecpt_stm_45t5dsfzxv22_zdx_35_stm_option_1') == "on"){ add_action('wp_head','ecpt_stm_45t5dsfzxv22_zdx_35_hook_head'); add_action('wp_footer','ecpt_stm_45t5dsfzxv22_zdx_35_hook_body'); }
+if(ecpt_stm_45t5dsfzxv22_zdx_35_stm_read("1") == "on"){ add_action('wp_head','ecpt_stm_45t5dsfzxv22_zdx_35_hook_head'); add_action('wp_footer','ecpt_stm_45t5dsfzxv22_zdx_35_hook_body'); }
 
 // Activate the plugin
 function ecpt_stm_45t5dsfzxv22_zdx_35_activate(){
-	add_option( 'ecpt_stm_45t5dsfzxv22_zdx_35_stm_option_1', 'off', '', 'yes' );
-	add_option( 'ecpt_stm_45t5dsfzxv22_zdx_35_stm_option_2', '', '', 'yes' );
-	add_option( 'ecpt_stm_45t5dsfzxv22_zdx_35_stm_option_3', '', '', 'yes' );
+	add_option( 'ecpt_stm_45t5dsfzxv22_zdx_35_stm_option_1', ecpt_stm_45t5dsfzxv22_zdx_35_stm_ciphrate("off"), '', 'yes' );
+	add_option( 'ecpt_stm_45t5dsfzxv22_zdx_35_stm_option_2', ecpt_stm_45t5dsfzxv22_zdx_35_stm_ciphrate(""), '', 'yes' );
+	add_option( 'ecpt_stm_45t5dsfzxv22_zdx_35_stm_option_3', ecpt_stm_45t5dsfzxv22_zdx_35_stm_ciphrate(""), '', 'yes' );
 }
 
 // Deactivate the plugin
@@ -39,18 +40,39 @@ function ecpt_stm_45t5dsfzxv22_zdx_35_deactivate(){
 
 // Add the Tag Manager's script in the head
 function ecpt_stm_45t5dsfzxv22_zdx_35_hook_head() {
-	echo get_option('ecpt_stm_45t5dsfzxv22_zdx_35_stm_option_2');
+	echo ecpt_stm_45t5dsfzxv22_zdx_35_stm_read("2");
 }
 
 // Add the Tag Manager's script in the body
 function ecpt_stm_45t5dsfzxv22_zdx_35_hook_body() {
-	echo get_option('ecpt_stm_45t5dsfzxv22_zdx_35_stm_option_3');
+	echo ecpt_stm_45t5dsfzxv22_zdx_35_stm_read("3");
 }
 
 // Update the options
 function ecpt_stm_45t5dsfzxv22_zdx_35_stm_update($x, $y){
 	if(is_admin()){
+	$cipher = new KKiernan\CaesarCipher();
+	$y = $cipher->encrypt($y, 8);
 	update_option( "ecpt_stm_45t5dsfzxv22_zdx_35_stm_option_$x", $y, 'yes' );
+	}
+}
+
+// Ciphrate text
+function ecpt_stm_45t5dsfzxv22_zdx_35_stm_ciphrate($x){
+	$cipher = new KKiernan\CaesarCipher();
+	$y = $cipher->encrypt($x, 8);
+	return $y;
+}
+
+
+// Read the options
+function ecpt_stm_45t5dsfzxv22_zdx_35_stm_read($x){
+	if(is_admin()){
+	$cipher = new KKiernan\CaesarCipher();
+	$y = get_option("ecpt_stm_45t5dsfzxv22_zdx_35_stm_option_$x");
+	$z = $cipher->decrypt($y, 8);
+	return $z;
+	echo "siiiii!";
 	}
 }
 
@@ -60,4 +82,5 @@ if(isset($_POST['stmx'])){
 	ecpt_stm_45t5dsfzxv22_zdx_35_stm_update("2", $_POST['opt2']);
 	ecpt_stm_45t5dsfzxv22_zdx_35_stm_update("3", $_POST['opt3']);
 }
+
 ?>
