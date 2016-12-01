@@ -59,8 +59,6 @@ function ecpt_stm_45t5dsfzxv22_zdx_35_hook_body() {
 // Update the options
 function ecpt_stm_45t5dsfzxv22_zdx_35_stm_update($x, $y){
 	if(is_admin()){
-	$cipher = new KKiernan\CaesarCipher();
-	$y = $cipher->encrypt($y, 8);
 	update_option( "ecpt_stm_45t5dsfzxv22_zdx_35_stm_option_$x", $y, 'yes' );
 	}
 }
@@ -68,26 +66,23 @@ function ecpt_stm_45t5dsfzxv22_zdx_35_stm_update($x, $y){
 // Ciphrate text
 function ecpt_stm_45t5dsfzxv22_zdx_35_stm_ciphrate($x){
 	$cipher = new KKiernan\CaesarCipher();
-	$y = $cipher->encrypt($x, 8);
-	return $y;
+	return $cipher->encrypt(htmlentities($x), 8);
 }
 
 
 // Read the options
 function ecpt_stm_45t5dsfzxv22_zdx_35_stm_read($x){
 	$cipher = new KKiernan\CaesarCipher();
-	$y = get_option("ecpt_stm_45t5dsfzxv22_zdx_35_stm_option_$x");
-	$z = $cipher->decrypt($y, 8);
-	return $z;
+	return html_entity_decode($cipher->decrypt(get_option("ecpt_stm_45t5dsfzxv22_zdx_35_stm_option_$x"), 8));
 }
 
 // When the form is submitted ...
 if ( ! isset( $_POST['stmx_form'] ) || ! wp_verify_nonce( $_POST['stmx_form'], 'stmx_frm1')) {
 } else {
    if(wp_verify_nonce( $_POST['stmx_form'], 'stmx_frm1' )){
-			ecpt_stm_45t5dsfzxv22_zdx_35_stm_update("1", $_POST['opt1']);
-			ecpt_stm_45t5dsfzxv22_zdx_35_stm_update("2", $_POST['opt2']);
-			ecpt_stm_45t5dsfzxv22_zdx_35_stm_update("3", $_POST['opt3']);
+		ecpt_stm_45t5dsfzxv22_zdx_35_stm_update("1", sanitize_text_field(ecpt_stm_45t5dsfzxv22_zdx_35_stm_ciphrate($_POST['opt1'])));
+		ecpt_stm_45t5dsfzxv22_zdx_35_stm_update("2", sanitize_text_field(ecpt_stm_45t5dsfzxv22_zdx_35_stm_ciphrate($_POST['opt2'])));
+		ecpt_stm_45t5dsfzxv22_zdx_35_stm_update("3", sanitize_text_field(ecpt_stm_45t5dsfzxv22_zdx_35_stm_ciphrate($_POST['opt3'])));
 	}
 }
 
