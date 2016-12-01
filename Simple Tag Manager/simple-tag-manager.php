@@ -8,8 +8,12 @@
 * Author URI: https://dansedmak.com/
 * License: MIT
 */
-
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
+
+// Including WP Essential Functions
+require_once(ABSPATH .'wp-includes/pluggable.php');
+
+// Including Plugin Files
 include( plugin_dir_path( __FILE__ ) . '/settings.php');
 include( plugin_dir_path( __FILE__ ) . '/caesar-cipher.php');
 
@@ -40,12 +44,16 @@ function ecpt_stm_45t5dsfzxv22_zdx_35_deactivate(){
 
 // Add the Tag Manager's script in the head
 function ecpt_stm_45t5dsfzxv22_zdx_35_hook_head() {
+	echo "<!-- Simple Tag Manager Plugin for WordPress (head)-->";
 	echo ecpt_stm_45t5dsfzxv22_zdx_35_stm_read("2");
+	echo "<!-- End of Simple Tag Manager -->";
 }
 
 // Add the Tag Manager's script in the body
 function ecpt_stm_45t5dsfzxv22_zdx_35_hook_body() {
+	echo "<!-- Simple Tag Manager Plugin for WordPress (footer)-->";
 	echo ecpt_stm_45t5dsfzxv22_zdx_35_stm_read("3");
+	echo "<!-- End of Simple Tag Manager -->";
 }
 
 // Update the options
@@ -67,20 +75,20 @@ function ecpt_stm_45t5dsfzxv22_zdx_35_stm_ciphrate($x){
 
 // Read the options
 function ecpt_stm_45t5dsfzxv22_zdx_35_stm_read($x){
-	if(is_admin()){
 	$cipher = new KKiernan\CaesarCipher();
 	$y = get_option("ecpt_stm_45t5dsfzxv22_zdx_35_stm_option_$x");
 	$z = $cipher->decrypt($y, 8);
 	return $z;
-	echo "siiiii!";
-	}
 }
 
 // When the form is submitted ...
-if(isset($_POST['stmx'])){
-	ecpt_stm_45t5dsfzxv22_zdx_35_stm_update("1", $_POST['opt1']);
-	ecpt_stm_45t5dsfzxv22_zdx_35_stm_update("2", $_POST['opt2']);
-	ecpt_stm_45t5dsfzxv22_zdx_35_stm_update("3", $_POST['opt3']);
+if ( ! isset( $_POST['stmx_form'] ) || ! wp_verify_nonce( $_POST['stmx_form'], 'stmx_frm1')) {
+} else {
+   if(wp_verify_nonce( $_POST['stmx_form'], 'stmx_frm1' )){
+			ecpt_stm_45t5dsfzxv22_zdx_35_stm_update("1", $_POST['opt1']);
+			ecpt_stm_45t5dsfzxv22_zdx_35_stm_update("2", $_POST['opt2']);
+			ecpt_stm_45t5dsfzxv22_zdx_35_stm_update("3", $_POST['opt3']);
+	}
 }
 
 ?>
