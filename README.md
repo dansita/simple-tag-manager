@@ -1,3 +1,9 @@
+IMPORTANT:
+I moved this project to BitBucket.
+https://bitbucket.org/dansita/simple-tag-manager/src/master/
+--------
+
+
 # simple-tag-manager
 
 This is a simple WordPress plugin through which you can insert Google Tag Manager in the website.
